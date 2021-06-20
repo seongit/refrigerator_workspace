@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	
+	<entry key="insertLike">
+		INSERT
+		  INTO LIKE
+		     (
+		       RECIPE_NO
+		     , USER_NO
+             , LIKE_DATE
+             , STATUS
+		     )
+		VALUES 
+		     (
+		       ?
+		     , ?
+             , SYSDATE
+             , ?
+		     )
+	</entry>
+	
+</properties>
