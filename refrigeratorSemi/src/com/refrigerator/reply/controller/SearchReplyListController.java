@@ -68,6 +68,7 @@ public class SearchReplyListController extends HttpServlet {
 		
 		ArrayList<AdmReply> searchList = new ReplyService().selectSearchUserList(pi, userId);
 		
+		request.setAttribute("userId", userId);
 		request.setAttribute("pi", pi);
 		request.setAttribute("searchList", searchList);
 		
