@@ -342,19 +342,25 @@ public class ReviewDao {
 	public int selectUserListCount(Connection conn, String userId) {
 		int result = 0;
 		PreparedStatement pstmt = null;
+		ResultSet rset = null;
 		String sql = prop.getProperty("selectUserListCount");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, userId);
+			pstmt.setString(1, "%"+ userId + "%" );
+			rset = pstmt.executeQuery();
 			
-			result = pstmt.executeUpdate();
+			if(rset.next()) {
+				result = rset.getInt("COUNT");
+			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
+			close(rset);
 			close(pstmt);
 		}
+		
 		return result;		
 	}
 	

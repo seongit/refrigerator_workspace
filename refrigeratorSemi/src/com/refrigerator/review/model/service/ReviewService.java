@@ -163,14 +163,10 @@ public class ReviewService {
 	/**
 	 * 아이디 검색 총 갯수
 	 */
+	
 	public int selectUserListCount(String userId) {
 		Connection conn = getConnection();
 		int result = new ReviewDao().selectUserListCount(conn, userId);
-		if(result > 0) {
-			commit(conn);
-		}else{
-			rollback(conn);
-		}
 		close(conn);
 		return result;
 	}

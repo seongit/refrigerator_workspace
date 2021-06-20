@@ -110,8 +110,7 @@
 		            
 		                <span id="" >회원 아이디</span>
 		                <input type="text" placeholder="아이디" name="userId">
-		                <button type="submit" class="btn btn-sm" id="searchBtn">조회</button>
-		          
+		               		 <button type="submit" class="btn btn-sm" id="searchBtn">조회</button>
 		            
 		           <script>
 		        
@@ -119,7 +118,7 @@
 			        		
 			        		$("#searchBtn").click(function(){
 			        			var userId = $(this).siblings("input[name=userId]").val();
-			        			location.href = "<%=contextPath%>/searchList.review?currentPage=1&userId=" + userId;
+			        			location.href = "searchList.review?currentPage=1&userId=" + userId;
 			        		})
 			        		
 			        	})

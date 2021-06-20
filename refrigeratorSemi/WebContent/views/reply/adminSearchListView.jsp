@@ -18,6 +18,9 @@
 
 	Member loginUser = (Member)session.getAttribute("loginUser"); 
 	ArrayList<AdmReply>list = (ArrayList<AdmReply>)request.getAttribute("searchList");
+	
+	String userId = (String)request.getAttribute("userId");
+	
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	int currentPage = pi.getCurrentPage();
 	int startPage = pi.getStartPage();
@@ -239,14 +242,15 @@
     
    		 <div class="paging-area" align="center">
 
+
 			<% if(currentPage != 1) { %>
-            <button onclick="location.href='<%=request.getContextPath()%>/rlist.admin?currentPage=<%=currentPage-1%>';">&lt;</button>
+            <button onclick="location.href='<%=request.getContextPath()%>/searchList.reply?currentPage=<%=currentPage-1%>&userId=<%=userId%>';">&lt;</button>
 			<% } %>
 			
 			<% for(int p=startPage; p<=endPage;p++) {%>
 		
 				<% if(p != currentPage) {%>
-				<button onclick="location.href='<%=request.getContextPath()%>/rlist.admin?currentPage=<%=p%>';"><%=p%></button>
+				<button onclick="location.href='<%=request.getContextPath()%>/searchList.reply?currentPage=<%=p%>&userId=<%=userId%>';"><%=p%></button>
 				<%} else { %>
 				<button disabled><%= p %></button>
 				<%} %>
@@ -254,7 +258,7 @@
 			<%} %>
 			
 			<%if(currentPage != maxPage) {%>
-            <button onclick="location.href='<%=request.getContextPath()%>/rlist.admin?currentPage=<%=currentPage+1%>';">&gt;</button>
+            <button onclick="location.href='<%=request.getContextPath()%>/searchList.reply?currentPage=<%=currentPage+1%>&userId=<%=userId%>';">&gt;</button>
 			<%} %>
 			
 			

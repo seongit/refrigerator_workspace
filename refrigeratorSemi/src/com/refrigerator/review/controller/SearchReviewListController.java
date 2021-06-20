@@ -68,11 +68,13 @@ public class SearchReviewListController extends HttpServlet {
 		
 		ArrayList<AdmReview> searchList = new ReviewService().selectSearchUserList(pi, userId);
 		
+		request.setAttribute("userId", userId);
 		request.setAttribute("pi", pi);
 		request.setAttribute("searchList", searchList);
 		
 		//경로 수정하기
 		request.getRequestDispatcher("views/review/adminSearchReviewListView.jsp").forward(request, response);
+
 		
 	}
 
