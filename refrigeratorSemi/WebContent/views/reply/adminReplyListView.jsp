@@ -1,20 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
     
-
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 								<!-- @author seong 5/30 -->
 
-    
-<%@ 
-	page import = "com.refrigerator.member.model.vo.Member
-				, com.refrigerator.reply.model.vo.*
-				,  java.util.ArrayList
-				, com.refrigerator.common.model.vo.PageInfo " 
-	
-%>
+   
 
-<% 	
+<%-- 	
 
 	Member loginUser = (Member)session.getAttribute("loginUser"); 
 	ArrayList<AdmReply>list = (ArrayList<AdmReply>)request.getAttribute("list");
@@ -24,7 +16,7 @@
 	int endPage = pi.getEndPage();
 	int maxPage = pi.getMaxPage();
 	
-%>
+--%>
 
 <!DOCTYPE html>
 <html>
@@ -127,7 +119,7 @@
         		
         		$("#searchBtn").click(function(){
         			var userId = $(this).siblings("input[name=userId]").val();
-        			location.href = "<%=contextPath%>/searchList.reply?currentPage=1&userId=" + userId;
+        			location.href = "searchList.reply?currentPage=1&userId=" + userId;
         		})
         		
         	})
@@ -140,7 +132,7 @@
 
         
         <!--댓글 삭제 기능-->
-        <form action="<%=contextPath%>/deleteReply.admin" id="admin-delete-reply" >
+        <form action="deleteReply.admin" id="admin-delete-reply" >
 
             <div class="btn" align="right" style="width: 440px">
 
@@ -197,31 +189,26 @@
                 
                     <tbody class="checked-delete">
                         
-                        <%if(list.isEmpty()){ %>
-                        	
-                        	<tr>
-                        		<td colspan="7">댓글 조회 결과가 없습니다.</td>
-                        	</tr>
-                        	
-                        
-                        <%} else { %>
-                   
-                   			<%for(AdmReply a : list) { %>
-                        
-	                        <tr align="center" id="test" >
-	                        	
-	                            <td width="50"><input type="checkbox" name="replyNo" value=<%=a.getReplyNo()%>></td>
-	                            <td><%=a.getUserId() %></td>
-	                            <td><%=a.getReportContent() %></td>
-	                            <td><%=a.getRecipeTitle() %></td>
-	                            <td><%=a.getReplyContent() %></td>
-	                            <td><%=a.getEnrollDate() %></td>
-	                            <td><%=a.getStatus() %></td>
-	                        </tr>
-	                        
-	                        <%} %>
-                        <%} %>
-	
+                        <c:choose>
+                        	<c:when test="${empty list}">
+		                        	<tr>
+		                        		<td colspan="7">댓글 조회 결과가 없습니다.</td>
+		                        	</tr>
+	                        </c:when>
+	                        <c:otherwise>
+	                   			<c:forEach var="a" items="${list}">
+			                        <tr align="center" id="test" >
+			                            <td width="50"><input type="checkbox" name="replyNo" value="${a.replyNo}"></td>
+			                            <td>${a.userId}</td>
+			                            <td>${a.reportContent}</td>
+			                            <td>${a.recipeTitle}</td>
+			                            <td>${a.replyContent}</td>
+			                            <td>${a.enrollDate}</td>
+			                            <td>${a.status}</td>
+			                        </tr>
+		                        </c:forEach> 
+	                        </c:otherwise>
+						</c:choose>
 
                     </tbody>
 
@@ -239,24 +226,24 @@
     
    		 <div class="paging-area" align="center">
 
-			<% if(currentPage != 1) { %>
-            <button onclick="location.href='<%=contextPath%>/rlist.admin?currentPage=<%=currentPage-1%>';">&lt;</button>
-			<% } %>
-			
-			<% for(int p=startPage; p<=endPage;p++) {%>
-		
-				<% if(p != currentPage) {%>
-				<button onclick="location.href='<%=contextPath%>/rlist.admin?currentPage=<%=p%>';"><%=p%></button>
-				<%} else { %>
-				<button disabled><%= p %></button>
-				<%} %>
-			
-			<%} %>
-			
-			<%if(currentPage != maxPage) {%>
-            <button onclick="location.href='<%=contextPath%>/rlist.admin?currentPage=<%=currentPage+1%>';">&gt;</button>
-			<%} %>
-			
+				<c:if test="${pi.currentPage ne 1 }">
+	           		 <button onclick="location.href='rlist.admin?currentPage=${pi.currentPage-1}';">&lt;</button>
+				</c:if>
+				
+				<c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
+					<c:choose>
+						<c:when test="${p ne pi.currentPage}">
+							<button onclick="location.href='rlist.admin?currentPage=${p}';">${p}</button>
+						</c:when>
+						<c:otherwise>
+							<button disabled>${p}</button>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+				
+				<c:if test="${pi.currentPage ne pi.maxPage}">
+	           		 <button onclick="location.href='rlist.admin?currentPage=${pi.currentPage+1}';">&gt;</button>
+				</c:if>
 			
         	</div>
         
