@@ -2,38 +2,12 @@
     pageEncoding="UTF-8" %>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-								<!-- @author seong 5/30 -->
-
-   
-
-<%-- 	
-
-	Member loginUser = (Member)session.getAttribute("loginUser"); 
-	ArrayList<AdmReply>list = (ArrayList<AdmReply>)request.getAttribute("list");
-	PageInfo pi = (PageInfo)request.getAttribute("pi");
-	int currentPage = pi.getCurrentPage();
-	int startPage = pi.getStartPage();
-	int endPage = pi.getEndPage();
-	int maxPage = pi.getMaxPage();
-	
---%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-
-
-
-
-<!--메뉴바가 들어갈 영역 -->
-
-<!-- 검색된 회원이 조회될 영역 
- 
-
--->
-
+<title>관리자단 댓글 관리</title>
 
 
 <style>
@@ -88,47 +62,36 @@
 
 	<div class="total_outer">
 
-        <%@ include file="../common/admin/adminTopNavView.jsp" %>
+		<jsp:include page="../common/admin/adminTopNavView.jsp"/>
         
 		<div>
-			<%@ include file="../common/admin/adminSideBarView.jsp" %>
-		
+			<jsp:include page="../common/admin/adminSideBarView.jsp"/>
 
-        <div class="select-list"  align="right" style="width: 350px;">
-            <a href="">홈</a> >
-            <a href="">게시판 관리</a> >
-            <a href="">댓글</a>
-        </div>
-        <br>
+	        <div class="select-list" align="right" style="width: 350px;">
+	            <a href="">홈</a> >
+	            <a href="">게시판 관리</a> >
+	            <a href="">댓글</a>
+	        </div>
+        	<br>
 
-        <div class="search-container" align="right" style="width:1000px">
-
-            <!--아이디 검색기능-->
-           
-                <span id="" >회원 아이디</span>
-                <input type="text" placeholder="아이디" name="userId">
-                <button type="submit" class="btn btn-sm " id="searchBtn">조회</button>
-            
-            
-
-        </div>
+	        <div class="search-container" align="right" style="width:1000px">
+	           		 <!--아이디 검색기능-->
+	                <span>회원 아이디</span>
+	                <input type="text" placeholder="아이디" name="userId">
+	                <button type="submit" class="btn btn-sm " id="searchBtn">조회</button>
+	        </div>
         
-        <script>
-        
-        	$(function(){
-        		
-        		$("#searchBtn").click(function(){
-        			var userId = $(this).siblings("input[name=userId]").val();
-        			location.href = "searchList.reply?currentPage=1&userId=" + userId;
-        		})
-        		
-        	})
-        	
-        
-        </script>
-        
-
-        <br><br>
+	        <script>
+	        	$(function(){
+	        		
+	        		$("#searchBtn").click(function(){
+	        			var userId = $(this).siblings("input[name=userId]").val();
+	        			location.href = "searchList.reply?currentPage=1&userId=" + userId;
+	        		})
+	        		
+	        	})
+	        </script>
+       		<br><br>
 
         
         <!--댓글 삭제 기능-->
@@ -144,32 +107,22 @@
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                     
-                            <!-- Modal Header -->
                             <div class="modal-header">
                             <h4 class="modal-title">댓글 삭제</h4>
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
-                        
-                            <!-- Modal body -->
-                            <div class="modal-body">
-					                            댓글 삭제는 복구가 불가능합니다.   <br>
-					                            댓글을 삭제하시겠습니까?
-					                            </div>
                             
-                        
-                            <!-- Modal footer -->
+                            <div class="modal-body">댓글 삭제는 복구가 불가능합니다.<br>댓글을 삭제하시겠습니까?</div>
+					        
                             <div class="modal-footer">
                             <button type="submit" class="btn btn-danger btn-sm">삭제하기</button>
-                            
-                    
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <br>
-
-            
+                            </div>
+                    	</div>
+                	</div>
+            	</div>
+           		<br>
+     	 
+      
             <div class="member-list" >
 
                 <table border="1" align="center" style="border: 1px sold black; width: 800px; margin-left: 100px;" class="reply-table"> 
@@ -209,22 +162,15 @@
 		                        </c:forEach> 
 	                        </c:otherwise>
 						</c:choose>
-
                     </tbody>
-
                 </table>
-
             </div>
-
-        
-       </form>
-        
-       </div>
-        
+		 </div>
+		 </form>
     </div>
     
-    
-   		 <div class="paging-area" align="center">
+    		<!-- 페이징바 -->
+   		 	<div class="paging-area" align="center">
 
 				<c:if test="${pi.currentPage ne 1 }">
 	           		 <button onclick="location.href='rlist.admin?currentPage=${pi.currentPage-1}';">&lt;</button>
