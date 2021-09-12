@@ -347,17 +347,8 @@
 	<%@ include file="../common/user/menubar.jsp" %>
 	
 
-	  <!--전체 감싸는 div-->
+	<!--전체 감싸는 div-->
     <div class="total-outer">
-    
-		<%-- 
-		<jsp:include page="../common/user/recipeSideBar.jsp">
-			<jsp:param name="userNo" value="<%= loginUser.getUserNo() %>"/>
-			<jsp:param name="recipeNo" value="<%= recipeNo %>"/>
-			<jsp:param name="ingre" value="<%= ingre %>"/>
-			<jsp:param name="subIngre" value="<%= subIngre %>"/>
-		</jsp:include>
-		--%>
         
         <div align="center">
             <div class="bannner">
@@ -369,8 +360,6 @@
                 </span>
             </div>
         </div>
-
-
 
         <br><br>
 
@@ -414,7 +403,6 @@
 		            <!--로그인한 사용자만 신고할 수 있도록-->
 		            <a href="" class="report-user-btn" data-toggle="modal" data-target="#recipe-report">신고하기</a>
 		            
-		            
 		            <!-- The Modal -->
 	                    <div class="modal" id="recipe-report" >
 	                    <div class="modal-dialog modal-dialog-centered ">
@@ -433,17 +421,15 @@
 	                        <!-- Modal body -->
 	                        <div class="modal-body">
 	                            <div class="modal-body-list report-mbody">
-	                                
 	                                <table>
 	                                    <tr>
 	                                        <th>
-	                                            신고 사유
+	                                           		신고 사유
 	                                        </th>
 	                                        <td>
 	                                        	<input type="text" name="report-re" id="report-re" placeholder="신고사유를 적어주세요">
 	                                        </td>
 	                                    </tr>
-	                                    
 	                                </table>
 	                            </div>
 	  
@@ -464,7 +450,6 @@
 
         <br>
         <hr class="area-header">
-
         <br><br>
 
         <div class="ingredients-info"  align="center">
@@ -515,7 +500,7 @@
 		                    </tr>
 		                    
 		                    <script>
-		                    subArr.push(<%=subIngre.get(i).getSubIngreAmount() / rc.getSeveralServings()%>);
+		                    	subArr.push(<%=subIngre.get(i).getSubIngreAmount() / rc.getSeveralServings()%>);
 							</script>
 		                    
 						<%} %>
@@ -528,11 +513,13 @@
             <br><br>
             <!--재료 계산기 클릭시 모달창 출력-->
             <div class="igre-calculator">
-                <div align="right" style="width: 900px">
-                    <b>1</b>인 기준 | 
-                    <a data-toggle="tooltip" title=" 재료 계산해드릴게요 !">
-                        <img src="<%=contextPath%>/resources/image/icon-cal.png" class="icon"  data-toggle="modal" data-target="#calculatorModal" >
-                    </a>
+                <div align="right" style="width: 1000px">
+                    <div id="served" >
+                    	<b>1</b>인 기준 |
+	                    <a data-toggle="tooltip" title=" 재료 계산해드릴게요 !">
+	                        <img src="<%=contextPath%>/resources/image/icon-cal.png" class="icon"  data-toggle="modal" data-target="#calculatorModal" >
+	                    </a>
+                   	 </div>
                     <script>
                         $(document).ready(function(){
                           $('[data-toggle="tooltip"]').tooltip();
@@ -553,7 +540,7 @@
                         <div class="modal-header" >
                             <h6 class="modal-title" style="text-align: center;">
                                 <br>
-                                이 요리는 몇 명이 먹나요?
+                              		  이 요리는 몇 명이 먹나요?
                             </h6>
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
@@ -561,23 +548,22 @@
                         <!-- Modal body -->
                         <div class="modal-body">
                             <select name="servings" id="select-servings">
-
                                 <option value="1" selected>1명</option>
                                 <option value="2">2명</option>
                                 <option value="3">3명</option>
                                 <option value="4">4명</option>
                                 <option value="5">5명</option>
-                            
                             </select>
 
                             <button type="button" id="calculator" data-dismiss="modal" class="btn btn-success btn-sm" onclick="calculator();" >확인</button>
-                            
                           
                             <script>
 	                            
 	                            function calculator(){
 	                            	
 	                                var servings = $("#select-servings").children("option:selected").val();
+	                                
+	                                $("#served").children().eq(0).text(servings);
 	                                
 	                                for(var i=0; i<<%=ingre.size()%>;i++) {
 	                                   $("#ing" + i).text(ingArr[i]*servings);
@@ -586,6 +572,8 @@
                                    for(var i=0;i<<%=subIngre.size()%>;i++){
 	                                	$("#sub" + i).text(subArr[i]*servings);
 	                                }
+                                   
+                                   
 	                                
 	                            }
 
